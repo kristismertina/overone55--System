@@ -1,71 +1,62 @@
-class Human:
-    default_name = "Vasya"
-    default_age = "30"
+from house import House
 
-    def __init__(self, house, money,  name = default_name, age = default_age):
+class Human:
+    __default_name = "Vasya"
+    __default_age = 30
+
+    def __init__(self, money,  name = __default_name, age = __default_age):
         self.__name = name
         self.__age = age
         self.__house = []
         self.__money = money
 
     def __str__(self):
-       return '({}, {}, {}, {})'.format(self.__name, self.__age, self.__house, self.__money )
+       return '({}, {}, {}, {})'.format(self.__name, self.__age, self.__money, self.__house)
 
 
     def info (self):
-        print("Human")
-        print("Name:" + self.__name)
-        print("Age:" + self.__age)
-        print("House:" + self.__house)    # здесь потомучто список?
-        print("Money:" + self.__money)
+        return 'Name: {} \t Age: {} \t House:{} \t Money: {}'.format(self.__name, self.__age, self.__money, self.__house )
+
 
     @staticmethod
     def default_info():
-        print('({}, {}, {}, {})'.format(default_name, default_age))
+        return 'Name: {} \t Age: {}'.format(Human.__default_name, Human.__default_age)
 
-    @property
+
     def __make_deal(self, house, cost):
-        return self.__money - cost
+        if self.__money >= cost:
+            self.__money -= cost
+            self.__house.append(house)
+            return True
+        else:
+            raise ValueError("Insufficient funds")
 
-    @property
-    def __earn_money(self, total):
+
+    def earn_money(self, total):
         return self.__money + total
 
-    @property
-    def __buy_house(self, house, sale):
+
+    def buy_house(self, house, sale):
         try:
-            self.__make_deal(house, house.sale (sale))
-        except:
-            ValueError ("num")
 
-
-    # не понимаю что здесь писать
-        #if self.__money >=
-        return self.__house.append(house)
-
-class House:
-
-    def __init__(self, area, price):
-        self._area = area
-        self._prise = price
-
-    def final_price(self, sale):
-        return self._prise - sale
+            return  self.__make_deal(house, house.final_price(sale))
+        except Exception as e:
+           return e
 
 
 
 
+if __name__ == '__main__':
+
+    obj = Human(10000)
+    #print(obj.earn_money(1000))
+    #print(obj.default_info())
 
 
-obj = Human("1212", 7)
-o = House (4, 60)
+    h1 = House (42, 113)
+    #print(h1._prise)
+    print (obj.buy_house (h1, 10))
 
-#print(o.final_price())
-#print(obj.__earn_money(5))  #AttributeError: 'Human' object has no attribute '__earn_money'
-#print(obj.default_info())  #NameError: name 'default_name' is not defined
-print(obj.info()) #TypeError: can only concatenate str (not "list") to str
-                  #здесь я понимаю нужно список в строку преобразовть
+    #print(obj.default_info())
 
 
-Word = str(self.__house[0])
-print("I like the {0} ...".format(Word))
